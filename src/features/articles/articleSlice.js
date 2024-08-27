@@ -27,6 +27,34 @@ export const createArticle = createAsyncThunk('articles/createArticle', async (a
   }
 });
 
+export const updateArticle = createAsyncThunk('articles/updateArticle', async (articleData, { rejectWithValue, getState }) => {
+  try {
+    const { token } = getState().auth; // Access token from auth slice
+    const response = await axios.put(`${API_URL}/${articleData.id}`, articleData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    return rejectWithValue(err.response.data);
+  }
+});
+
+export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (articleId, { rejectWithValue, getState }) => {
+  try {
+    const { token } = getState().auth; // Access token from auth slice
+    await axios.delete(`${API_URL}/${articleId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return articleId;
+  } catch (err) {
+    return rejectWithValue(err.response.data);
+  }
+});
+
 const articleSlice = createSlice({
   name: 'articles',
   initialState: {
@@ -60,6 +88,35 @@ const articleSlice = createSlice({
         state.articles.push(action.payload); // Add new article to the list
       })
       .addCase(createArticle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Update article
+      .addCase(updateArticle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateArticle.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.articles.findIndex((article) => article.id === action.payload.id);
+        if (index !== -1) {
+          state.articles[index] = action.payload;
+        }
+      })
+      .addCase(updateArticle.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Delete article
+      .addCase(deleteArticle.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteArticle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.articles = state.articles.filter((article) => article.id !== action.payload);
+      })
+      .addCase(deleteArticle.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

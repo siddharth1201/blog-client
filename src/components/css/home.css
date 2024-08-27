@@ -1,0 +1,115 @@
+/* home.css */
+
+/* Container for the Home page */
+.home-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 5px;
+  }
+  
+  .logout-button {
+    background-color: #f44336; /* Red */
+    color: white;
+  }
+  
+  .submit-button {
+    background-color: #4caf50; /* Green */
+    color: white;
+  }
+  
+  .cancel-button {
+    background-color: #9e9e9e; /* Grey */
+    color: white;
+  }
+  
+  .edit-button {
+    background-color: #2196f3; /* Blue */
+    color: white;
+  }
+  
+  .delete-button {
+    background-color: #f44336; /* Red */
+    color: white;
+  }
+  
+  .input-field {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .article-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }
+  
+  .article-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .modal-confirm-button, .modal-cancel-button {
+    margin: 0 5px;
+  }
+  
+  .modal-confirm-button {
+    background-color: #4caf50; /* Green */
+    color: white;
+  }
+  
+  .modal-cancel-button {
+    background-color: #9e9e9e; /* Grey */
+    color: white;
+  }
+  
+  .notification {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #4caf50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+  }
+  
