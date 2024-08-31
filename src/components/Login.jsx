@@ -53,7 +53,7 @@ function Login() {
         setShowDialog(true);
         setTimeout(() => {
           setShowDialog(false);
-          navigate('/home');
+          navigate('/');
         }, 2000); // Show dialog for 2 seconds
       } else {
         // Handle login errors based on the response

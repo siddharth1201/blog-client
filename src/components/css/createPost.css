@@ -1,0 +1,121 @@
+/* Container styling for the CreatePost component */
+.create-post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading styles */
+  .create-post-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Input field styling */
+  .input-field {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* CKEditor component spacing */
+  .ck-editor__editable {
+    min-height: 200px;
+    margin-bottom: 15px;
+  }
+  
+  /* Submit button styling */
+  .submit-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Cancel button styling */
+  .cancel-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #dc3545;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Success notification styling */
+  .notification {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #d4edda;
+    border-left: 5px solid #28a745;
+    border-radius: 4px;
+    color: #155724;
+    font-size: 14px;
+  }
+  
+  /* Modal styles for confirmation */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .modal-confirm-button,
+  .modal-cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .modal-confirm-button {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .modal-cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  

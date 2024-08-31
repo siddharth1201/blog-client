@@ -1,12 +1,13 @@
+// AuthenticatedRoute.jsx
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const AuthenticatedRoute = ({ redirectPath = '/home' }) => {
+const AuthenticatedRoute = ({ redirectPath = '/login' }) => {
   const { user } = useSelector((state) => state.auth);
 
-  // Redirect authenticated users away from login and signup pages
-  return user ? <Navigate to={redirectPath} /> : <Outlet />;
+  // If the user is not authenticated, redirect to the specified path (default: login page)
+  return user ? <Outlet /> : <Navigate to={redirectPath} />;
 };
 
 export default AuthenticatedRoute;
