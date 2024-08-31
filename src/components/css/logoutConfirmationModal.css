@@ -1,0 +1,43 @@
+/* logoutConfirmationModal.css */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .modal-confirm-button,
+  .modal-cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .modal-confirm-button {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .modal-cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  

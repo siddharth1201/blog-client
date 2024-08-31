@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createArticle, updateArticle } from '../features/articles/articleSlice';
 import CKEditorComponent from './CKEditorComponent';
 import { useNavigate, useLocation } from 'react-router-dom';
+import UpdateConfirmationModal from './modals/UpdateConfirmationModal';
 import './css/createPost.css';
 
 function CreatePost() {
@@ -21,6 +22,8 @@ function CreatePost() {
   const [previewUrl, setPreviewUrl] = useState(''); // For image preview
   const [imageError, setImageError] = useState(''); // For image link validation
   const [formErrors, setFormErrors] = useState({ title: '', body: '' }); // For form validation errors
+  const [showCancelConfirmationModal, setShowCancelConfirmationModal] = useState(false); // For cancel confirmation modal
+  const [showUpdateConfirmationModal, setShowUpdateConfirmationModal] = useState(false); // For update confirmation modal
 
   useEffect(() => {
     if (editingArticle) {
@@ -76,14 +79,7 @@ function CreatePost() {
     if (!validateForm()) return;
 
     if (editingArticle) {
-      dispatch(updateArticle({ id: editingArticle.id, title, body, subtitle, imageLink }))
-        .then(() => {
-          setNotificationMessage('Article updated successfully!');
-          setShowSuccessNotification(true);
-          resetForm();
-          setTimeout(() => setShowSuccessNotification(false), 3000);
-          navigate('/');
-        });
+      setShowUpdateConfirmationModal(true);
     } else {
       dispatch(createArticle({ title, body, subtitle, imageLink }))
         .then(() => {
@@ -94,6 +90,35 @@ function CreatePost() {
           navigate('/');
         });
     }
+  };
+
+  const handleUpdateConfirmation = () => {
+    dispatch(updateArticle({ id: editingArticle.id, title, body, subtitle, imageLink }))
+      .then(() => {
+        setNotificationMessage('Article updated successfully!');
+        setShowSuccessNotification(true);
+        resetForm();
+        setTimeout(() => setShowSuccessNotification(false), 3000);
+        navigate('/');
+      });
+    setShowUpdateConfirmationModal(false);
+  };
+
+  const handleCancel = () => {
+    if (editingArticle) {
+      setShowCancelConfirmationModal(true);
+    } else {
+      navigate('/');
+    }
+  };
+
+  const confirmNavigation = () => {
+    setShowCancelConfirmationModal(false);
+    navigate('/'); // Redirect to the view page
+  };
+
+  const cancelNavigation = () => {
+    setShowCancelConfirmationModal(false);
   };
 
   const resetForm = () => {
@@ -142,7 +167,7 @@ function CreatePost() {
       <button className="submit-button" onClick={handleCreateOrUpdateArticle}>
         {editingArticle ? 'Update' : 'Submit'}
       </button>
-      <button className="cancel-button" onClick={() => navigate('/')}>
+      <button className="cancel-button" onClick={handleCancel}>
         Cancel
       </button>
 
@@ -150,6 +175,22 @@ function CreatePost() {
         <div className="notification">
           <p>{notificationMessage}</p>
         </div>
+      )}
+
+      {showCancelConfirmationModal && (
+        <UpdateConfirmationModal
+          actionType="save"
+          onConfirm={confirmNavigation}
+          onCancel={() => navigate('/')} // Redirect to the view page on discard
+        />
+      )}
+
+      {showUpdateConfirmationModal && (
+        <UpdateConfirmationModal
+          actionType="update"
+          onConfirm={handleUpdateConfirmation}
+          onCancel={() => setShowUpdateConfirmationModal(false)}
+        />
       )}
     </div>
   );

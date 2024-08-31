@@ -1,10 +1,10 @@
-// Home.jsx
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
 import { fetchArticles } from '../features/articles/articleSlice';
 import { createComment, fetchComments } from '../features/comments/commentSlice';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import LogoutConfirmationModal from './modals/LogoutConfirmationModal';
 import './css/home.css';
 
 function Home() {
@@ -17,6 +17,7 @@ function Home() {
   const [newComment, setNewComment] = useState('');
   const [activeArticleSlug, setActiveArticleSlug] = useState(null);
   const [showCommentAddedPopup, setShowCommentAddedPopup] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false); // State for modal visibility
 
   useEffect(() => {
     dispatch(fetchArticles());
@@ -29,8 +30,17 @@ function Home() {
   }, [activeArticleSlug, dispatch]);
 
   const handleLogout = () => {
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
+    setShowLogoutModal(false);
     dispatch(logout());
     navigate('/login');
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutModal(false);
   };
 
   const handleCreatePost = () => {
@@ -130,6 +140,11 @@ function Home() {
         <div className="popup">
           <p>Comment added!</p>
         </div>
+      )}
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <LogoutConfirmationModal onConfirm={confirmLogout} onCancel={cancelLogout} />
       )}
     </div>
   );
