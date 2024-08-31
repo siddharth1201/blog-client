@@ -1,4 +1,3 @@
-// CreatePost.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createArticle, updateArticle } from '../features/articles/articleSlice';
@@ -11,32 +10,72 @@ function CreatePost() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Extract the article to edit from the route state, if present
   const editingArticle = location.state?.article;
 
-  // Initialize state with existing article data if available, otherwise empty
   const [title, setTitle] = useState(editingArticle?.title || '');
   const [subtitle, setSubtitle] = useState(editingArticle?.subtitle || '');
   const [imageLink, setImageLink] = useState(editingArticle?.imageLink || '');
   const [body, setBody] = useState(editingArticle?.body || '');
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
+  const [previewUrl, setPreviewUrl] = useState(''); // For image preview
+  const [imageError, setImageError] = useState(''); // For image link validation
+  const [formErrors, setFormErrors] = useState({ title: '', body: '' }); // For form validation errors
 
-  // Reset form when editingArticle changes (for better UX when switching from editing to creating)
   useEffect(() => {
     if (editingArticle) {
       setTitle(editingArticle.title);
       setSubtitle(editingArticle.subtitle);
       setImageLink(editingArticle.imageLink);
       setBody(editingArticle.body);
+      updateImagePreview(editingArticle.imageLink);
     } else {
       resetForm();
     }
   }, [editingArticle]);
 
+  const updateImagePreview = (url) => {
+    // Check if the URL is valid and an image
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      setPreviewUrl(url);
+      setImageError('');
+    };
+    img.onerror = () => {
+      setPreviewUrl('');
+      setImageError('Invalid image link');
+    };
+  };
+
+  const handleImageLinkChange = (e) => {
+    const link = e.target.value;
+    setImageLink(link);
+    updateImagePreview(link);
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const errors = { title: '', body: '' };
+
+    if (!title.trim()) {
+      errors.title = 'Title cannot be empty or just whitespace';
+      isValid = false;
+    }
+
+    if (!body.trim()) {
+      errors.body = 'Body cannot be empty';
+      isValid = false;
+    }
+
+    setFormErrors(errors);
+    return isValid;
+  };
+
   const handleCreateOrUpdateArticle = () => {
+    if (!validateForm()) return;
+
     if (editingArticle) {
-      // Update existing article
       dispatch(updateArticle({ id: editingArticle.id, title, body, subtitle, imageLink }))
         .then(() => {
           setNotificationMessage('Article updated successfully!');
@@ -46,7 +85,6 @@ function CreatePost() {
           navigate('/');
         });
     } else {
-      // Create new article
       dispatch(createArticle({ title, body, subtitle, imageLink }))
         .then(() => {
           setNotificationMessage('Article created successfully!');
@@ -63,6 +101,9 @@ function CreatePost() {
     setSubtitle('');
     setImageLink('');
     setBody('');
+    setPreviewUrl('');
+    setImageError('');
+    setFormErrors({ title: '', body: '' }); // Reset form errors
   };
 
   return (
@@ -75,6 +116,7 @@ function CreatePost() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      {formErrors.title && <p className="form-error">{formErrors.title}</p>}
       <input
         className="input-field"
         type="text"
@@ -87,9 +129,16 @@ function CreatePost() {
         type="text"
         placeholder="Image Link"
         value={imageLink}
-        onChange={(e) => setImageLink(e.target.value)}
+        onChange={handleImageLinkChange}
       />
+      {previewUrl && (
+        <div className="image-preview">
+          <img src={previewUrl} alt="Preview" />
+        </div>
+      )}
+      {imageError && <p className="image-error">{imageError}</p>}
       <CKEditorComponent data={body} setData={setBody} />
+      {formErrors.body && <p className="form-error">{formErrors.body}</p>}
       <button className="submit-button" onClick={handleCreateOrUpdateArticle}>
         {editingArticle ? 'Update' : 'Submit'}
       </button>
@@ -97,7 +146,6 @@ function CreatePost() {
         Cancel
       </button>
 
-      {/* Success Notification */}
       {showSuccessNotification && (
         <div className="notification">
           <p>{notificationMessage}</p>
