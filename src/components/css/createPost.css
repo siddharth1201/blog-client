@@ -3,16 +3,18 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1); /* Transparent glass effect */
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px); /* Frosted glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Slight border for the glass effect */
 }
 
 /* Heading styles */
 .create-post-container h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
+  color: #fff;
   text-align: center;
 }
 
@@ -21,15 +23,20 @@
   width: calc(100% - 20px);
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
   font-size: 16px;
+  background: rgba(255, 255, 255, 0.2); /* Slightly transparent input fields */
+  color: #fff;
 }
 
 /* CKEditor component spacing */
 .ck-editor__editable {
   min-height: 200px;
   margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.2); /* Slightly transparent editor background */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
 }
 
 /* Submit button styling */
@@ -37,42 +44,42 @@
   padding: 10px 20px;
   margin-right: 10px;
   border: none;
-  background-color: #28a745;
+  background: rgba(40, 167, 69, 0.8); /* Transparent green */
   color: #fff;
   font-size: 16px;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .submit-button:hover {
-  background-color: #218838;
+  background: rgba(40, 167, 69, 1); /* Solid green on hover */
 }
 
 /* Cancel button styling */
 .cancel-button {
   padding: 10px 20px;
   border: none;
-  background-color: #dc3545;
+  background: rgba(220, 53, 69, 0.8); /* Transparent red */
   color: #fff;
   font-size: 16px;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .cancel-button:hover {
-  background-color: #c82333;
+  background: rgba(220, 53, 69, 1); /* Solid red on hover */
 }
 
 /* Success notification styling */
 .notification {
   margin-top: 15px;
   padding: 10px;
-  background-color: #d4edda;
-  border-left: 5px solid #28a745;
-  border-radius: 4px;
-  color: #155724;
+  background: rgba(40, 167, 69, 0.1); /* Transparent green */
+  border-left: 5px solid rgba(40, 167, 69, 0.8); /* Green border */
+  border-radius: 8px;
+  color: rgba(40, 167, 69, 0.8);
   font-size: 14px;
 }
 
@@ -85,13 +92,13 @@
 .image-preview img {
   max-width: 100%;
   height: auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
 }
 
 /* Error message styling for invalid image link */
 .image-error {
-  color: #dc3545;
+  color: rgba(220, 53, 69, 0.8); /* Transparent red */
   font-size: 14px;
   margin-top: 10px;
   text-align: center;
@@ -112,40 +119,39 @@
 }
 
 .modal-content {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 12px;
   text-align: center;
   width: 90%;
   max-width: 400px;
 }
 
+/* Modal buttons */
 .modal-confirm-button,
 .modal-cancel-button {
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   margin: 5px;
 }
 
 .modal-confirm-button {
-  background-color: #28a745;
+  background: rgba(40, 167, 69, 0.8); /* Transparent green */
   color: #fff;
 }
 
 .modal-cancel-button {
-  background-color: #dc3545;
+  background: rgba(220, 53, 69, 0.8); /* Transparent red */
   color: #fff;
 }
 
-
 /* Error message styling */
 .form-error {
-  color: #dc3545;
+  color: rgba(220, 53, 69, 0.8); /* Transparent red */
   font-size: 14px;
   margin-top: -10px;
   margin-bottom: 15px;
 }
-

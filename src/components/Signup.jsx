@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+// Register.jsx
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { signupUser } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { gsap } from 'gsap';
+import './css/loginSignup.css'; // Import the CSS file
 
-const validateUsername = (username) => /^[a-zA-Z\s]+$/.test(username);
-const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
-const validatePassword = (password) => 
-  /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password) &&
-  !/(.)\1/.test(password);
-
-function Signup() {
+function Register() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -22,16 +19,22 @@ function Signup() {
     password: '',
     confirmPassword: '',
   });
-
+  const [successMessage, setSuccessMessage] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
+  const formRef = useRef(null);
+  const messageRef = useRef(null);
+  const spinnerRef = useRef(null); // Reference for spinner animation
+
+  useEffect(() => {
+    // Animation for form entrance
+    gsap.from(formRef.current, { opacity: 0, y: -50, duration: 1, ease: 'power2.out' });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
-    // Clear errors on input change
     setErrors({ ...errors, [name]: '' });
   };
 
@@ -39,18 +42,19 @@ function Signup() {
     let valid = true;
     let newErrors = {};
 
-    if (!validateUsername(formData.username)) {
+    if (!/^[a-zA-Z\s]+$/.test(formData.username)) {
       newErrors.username = 'Username must contain only letters and spaces.';
       valid = false;
     }
 
-    if (!validateEmail(formData.email)) {
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email must contain "@" and "."';
       valid = false;
     }
 
-    if (!validatePassword(formData.password)) {
-      newErrors.password = 'Password must be at least 8 characters, include one uppercase letter, one number, one special character, and no two consecutive characters should be the same.';
+    if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(formData.password)) {
+      newErrors.password =
+        'Password must be at least 8 characters, include one uppercase letter, one number, one special character, and no two consecutive characters should be the same.';
       valid = false;
     }
 
@@ -71,70 +75,98 @@ function Signup() {
     }
 
     try {
-      const resultAction = await dispatch(signupUser(formData));
-      if (signupUser.fulfilled.match(resultAction)) {
+      await dispatch(signupUser(formData));
+      // Navigate to login page after a successful registration
+      setSuccessMessage('Registered successfully, login now');
+      gsap.fromTo(
+        messageRef.current,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }
+      );
+
+      // Navigate to login page after 2 seconds
+      setTimeout(() => {
         navigate('/login');
-      } else {
-        console.error('Registration failed:', resultAction.payload);
-      }
+      }, 2000);
     } catch (err) {
       console.error('An unexpected error occurred:', err);
     }
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-          {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
-        </div>
-        
-        <div>
-          <input
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-        </div>
+    <div className="login-container">
+      <div className="login-box" ref={formRef}>
+        <h2 className="login-title">Sign Up</h2>
+        {successMessage && (
+          <p className="success-message" ref={messageRef}>
+            {successMessage}
+          </p>
+        )}
+        {loading && (
+          <div className="loading-spinner" ref={spinnerRef}>
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+            <div className="spinner-ring"></div>
+          </div>
+        )}
 
-        <div>
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
-        </div>
-
-        <div>
-          <input
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            style={{ borderColor: errors.confirmPassword ? 'red' : 'initial' }}
-          />
-          {errors.confirmPassword && <p style={{ color: 'red' }}>{errors.confirmPassword}</p>}
-        </div>
-
-        <button type="submit">Signup</button>
-      </form>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error.message}</p>}
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="input-field">
+            <label htmlFor="signup-username">Username</label>
+            <input
+              id="signup-username"
+              name="username"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+            {errors.username && <p className="error">{errors.username}</p>}
+          </div>
+          <div className="input-field">
+            <label htmlFor="signup-email">Email</label>
+            <input
+              id="signup-email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            {errors.email && <p className="error">{errors.email}</p>}
+          </div>
+          <div className="input-field">
+            <label htmlFor="signup-password">Password</label>
+            <input
+              id="signup-password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            {errors.password && <p className="error">{errors.password}</p>}
+          </div>
+          <div className="input-field">
+            <label htmlFor="signup-confirm-password">Confirm Password</label>
+            <input
+              id="signup-confirm-password"
+              name="confirmPassword"
+              type="password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+            {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+          </div>
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Processing...' : 'Continue'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
 
-export default Signup;
+export default Register;

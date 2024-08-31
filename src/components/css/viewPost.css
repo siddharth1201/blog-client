@@ -1,122 +1,187 @@
-/* viewPost.css */
-
 /* Container styling for the entire view post page */
+p{
+  color:black;
+}
 .view-post-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.2); /* Transparent white background */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3); /* More pronounced shadow for a glossy effect */
+  color: #fff;
+  backdrop-filter: blur(10px); /* Blur effect for the glassy appearance */
+}
+
+/* Header section for image, title, and subtitle */
+.header-section {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.header-section img {
+  width: auto;
+  max-height: 80vh;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.header-section h2 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 0;
+  font-weight: bold;
+}
+
+.header-section h3 {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  margin: 5px 0 20px;
+}
+
+/* Main content area with body and comments section */
+.content-area {
+  display: flex;
+  gap: 20px;
+}
+
+.post-body {
+  flex: 3;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #fff;
+  margin-right: 20px;
+}
+
+.comments-section {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 10px;
+  overflow-y: scroll;
+  max-height: 40vh;
+}
+
+/* Styling for individual comments */
+.comment {
+  padding: 4px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.comment strong {
+  color: #00bcd4;
+}
+
+/* Text area for adding new comments */
+.comment-input {
+  width: 90%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Button for submitting comments */
+.comment-button {
+  padding: 10px 15px;
+  background-color: #00bcd4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.comment-button:hover {
+  background-color: #0097a7;
+}
+
+/* Popup styling for comment added notification */
+.popup {
+  position: fixed;
+  top: 20px; /* Distance from the bottom of the viewport */
+  right: 20px; /* Distance from the right side of the viewport */
+  background-color: #4464e6;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeInOut 3s forwards;
+  max-width: 90vw; /* Ensure the popup does not exceed the viewport width */
+  box-sizing: border-box; /* Include padding and border in the element’s total width and height */
+  max-height: 100px; /* Minimum height to ensure it’s large enough for the content */
+
+}
+
+/* Animation for popup */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* Post title styling */
-  .post-title {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: #333;
-    font-weight: bold;
+  10%, 90% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Post subtitle styling */
-  .post-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    color: #555;
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* Styling for the post image */
-  .post-image {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  }
-  
-  /* Post body/content styling */
-  .post-body {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #444;
-    margin-bottom: 30px;
-  }
-  
-  /* Comments section styling */
-  .comments-section {
-    margin-top: 30px;
-  }
-  
-  .comments-section h4 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  /* Individual comment styling */
-  .comment {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    background-color: #fafafa;
-  }
-  
-  .comment strong {
-    color: #0077cc;
-  }
-  
-  /* Text area for adding new comments */
-  .comment-input {
-    width: 100%;
-    height: 80px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-size: 1rem;
-  }
-  
-  /* Button for submitting comments */
-  .comment-button {
-    padding: 10px 15px;
-    background-color: #0077cc;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .comment-button:hover {
-    background-color: #005fa3;
-  }
-  
-  /* Popup styling for comment added notification */
-  .popup {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    animation: fadeInOut 3s forwards;
-  }
-  
-  @keyframes fadeInOut {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    10%, 90% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-  }
-  
+}
+
+/* Button styling for modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-confirm-button, .modal-cancel-button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-confirm-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.modal-confirm-button:hover {
+  background-color: #218838;
+}
+
+.modal-cancel-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.modal-cancel-button:hover {
+  background-color: #c82333;
+}

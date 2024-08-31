@@ -1,11 +1,11 @@
+// Home.jsx
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../features/auth/authSlice';
 import { fetchArticles } from '../features/articles/articleSlice';
 import { createComment, fetchComments } from '../features/comments/commentSlice';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import LogoutConfirmationModal from './modals/LogoutConfirmationModal';
-import './css/home.css';
+import { useState, useEffect, useRef } from 'react';
+import ArticleComponent from './ArticleComponent';
+import './css/home.css'; // CSS file for Home component
 
 function Home() {
   const dispatch = useDispatch();
@@ -17,7 +17,8 @@ function Home() {
   const [newComment, setNewComment] = useState('');
   const [activeArticleSlug, setActiveArticleSlug] = useState(null);
   const [showCommentAddedPopup, setShowCommentAddedPopup] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false); // State for modal visibility
+
+  const gridRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchArticles());
@@ -29,23 +30,28 @@ function Home() {
     }
   }, [activeArticleSlug, dispatch]);
 
-  const handleLogout = () => {
-    setShowLogoutModal(true);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const grid = gridRef.current;
+      const articles = Array.from(grid.querySelectorAll('.article-component'));
+      const center = window.innerHeight / 2;
 
-  const confirmLogout = () => {
-    setShowLogoutModal(false);
-    dispatch(logout());
-    navigate('/login');
-  };
+      articles.forEach((article) => {
+        const rect = article.getBoundingClientRect();
+        const distance = Math.abs(center - (rect.top + rect.height / 2));
+        const scale = Math.max(1 - distance / 1000, 0.8);
+        article.style.transform = `scale(${scale})`;
+      });
+    };
 
-  const cancelLogout = () => {
-    setShowLogoutModal(false);
-  };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
-  const handleCreatePost = () => {
-    navigate('/create');
-  };
+ 
+
 
   const handleViewPost = (article) => {
     navigate(`/view/${article.slug}`, { state: { article } });
@@ -69,71 +75,22 @@ function Home() {
   return (
     <div className="home-container">
       <h1>Welcome to the Home Page!</h1>
-      <button className="logout-button" onClick={handleLogout}>
-        Logout
-      </button>
-      <button className="create-post-button" onClick={handleCreatePost}>
-        Create Post
-      </button>
+      
 
       <h2>Articles</h2>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      {articles &&
-        articles.map((article) => (
-          <div
-            className="article-card"
-            key={article.id}
-            onClick={() => handleViewPost(article)}
-          >
-            <h3>{article.title}</h3>
-            {article.subtitle && <h4>{article.subtitle}</h4>}
-            <div dangerouslySetInnerHTML={{ __html: article.body }} />
-            {article.imageLink && (
-              <div className="article-image">
-                <img src={article.imageLink} alt={article.title} />
-              </div>
-            )}
-            <button
-              className="view-button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleViewPost(article);
-              }}
-            >
-              View Post
-            </button>
-
-            {/* Comments Section */}
-            <div className="comments-section">
-              <h4>Comments</h4>
-              {comments
-                .filter((comment) => comment.articleSlug === article.slug)
-                .slice(-2)
-                .map((comment) => (
-                  <p key={comment.id}>
-                    <strong>{comment.author.username}:</strong> {comment.body}
-                  </p>
-                ))}
-              <textarea
-                className="comment-input"
-                placeholder="Add a comment..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <button
-                className="comment-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddComment(article.slug);
-                }}
-              >
-                Submit Comment
-              </button>
-            </div>
-          </div>
-        ))}
+      <div className="articles-grid" ref={gridRef}>
+        {articles &&
+          articles.map((article, index) => (
+            <ArticleComponent
+              key={article.id}
+              article={article}
+              onClick={handleViewPost}
+              type={index % 5 === 0 ? 'banner' : 'regular'} // Adjust this condition to control banner placement
+            />
+          ))}
+      </div>
 
       {/* Comment Added Popup */}
       {showCommentAddedPopup && (
@@ -142,10 +99,7 @@ function Home() {
         </div>
       )}
 
-      {/* Logout Confirmation Modal */}
-      {showLogoutModal && (
-        <LogoutConfirmationModal onConfirm={confirmLogout} onCancel={cancelLogout} />
-      )}
+      
     </div>
   );
 }

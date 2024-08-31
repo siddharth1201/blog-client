@@ -1,0 +1,147 @@
+/* loginSignup.css */
+
+/* General styles */
+body {
+    margin: 10px 200px;
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
+   
+    background: linear-gradient(135deg, #0232527a, #1d264c);
+  }
+  
+  /* Container for the login form */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+  }
+  
+  /* Box styling */
+  .login-box {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    transform-origin: center;
+  }
+  
+  /* Title of the login form */
+  .login-title {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Form styles */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Input fields */
+  .input-field {
+    margin-bottom: 20px;
+  }
+  
+  .input-field label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .input-field input {
+    width: calc(100% - 10px);
+    padding: 10px 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+  }
+  
+  .input-field input:focus {
+    border-color: #74ebd5;
+    outline: none;
+  }
+  
+  /* Error message styles */
+  .error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* Button styles */
+  .login-button {
+    background: #74ebd5;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .login-button:hover {
+    background: #6ac1c0;
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .login-box {
+      padding: 20px;
+      max-width: 90%;
+    }
+  
+    .login-title {
+      font-size: 20px;
+    }
+  
+    .login-button {
+      padding: 8px;
+    }
+  }
+  
+  /* Add this to your loginSignup.css */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .spinner-ring {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid rgba(0, 0, 0, 0.2);
+    border-top: 4px solid #3498db; /* Customize the color */
+    animation: spin 1.2s linear infinite;
+    position: absolute;
+  }
+  
+  .spinner-ring:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  
+  .spinner-ring:nth-child(3) {
+    animation-delay: -0.6s;
+  }
+  
+  .spinner-ring:nth-child(4) {
+    animation-delay: -0.9s;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  

@@ -1,0 +1,21 @@
+/* app.css */
+
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; /* Ensure a clean, consistent font */
+  }
+  
+  /* Heading Styles */
+  h1 {
+    font-size: 2rem; /* Adjust if needed for better visual hierarchy */
+  }
+  
+  /* Link Styles */
+  a {
+    color: inherit; /* Ensures links adopt the color of the parent element */
+    text-decoration: none; /* Remove underline by default */
+  }
+  
+  /* Add any additional general styles needed for your application */
+  

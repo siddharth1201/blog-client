@@ -1,43 +1,58 @@
-/* logoutConfirmationModal.css */
+/* Modal container styling */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay for contrast */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .modal-content {
-    background: #fff;
+}
+
+/* Modal content styling */
+.modal-content {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px; /* Slightly more rounded corners */
     text-align: center;
     width: 90%;
     max-width: 400px;
-  }
-  
-  .modal-confirm-button,
-  .modal-cancel-button {
-    padding: 10px 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Softer shadow for a modern look */
+}
+
+/* Modal buttons styling */
+.modal-confirm-button,
+.modal-cancel-button {
+    padding: 12px 24px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px; /* Rounded corners for buttons */
     font-size: 16px;
     cursor: pointer;
-    margin: 5px;
-  }
-  
-  .modal-confirm-button {
-    background-color: #28a745;
+    margin: 8px;
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition effects */
+}
+
+/* Confirm button styling */
+.modal-confirm-button {
+    background-color: #4caf50; /* Green color for confirmation */
     color: #fff;
-  }
-  
-  .modal-cancel-button {
-    background-color: #dc3545;
+}
+
+.modal-confirm-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Cancel button styling */
+.modal-cancel-button {
+    background-color: #f44336; /* Red color for cancellation */
     color: #fff;
-  }
-  
+}
+
+.modal-cancel-button:hover {
+    background-color: #e53935; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}

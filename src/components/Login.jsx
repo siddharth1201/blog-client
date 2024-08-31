@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+// Login.jsx
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { gsap } from 'gsap';
+import './css/loginSignup.css'; // CSS file for styles
 
 function Login() {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
-  const [errors, setErrors] = useState({
-    username: '',
-    password: '',
-  });
-  const [showDialog, setShowDialog] = useState(false);
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [errors, setErrors] = useState({ username: '', password: '' });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
+
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    // Animation for form entrance
+    gsap.from(formRef.current, { opacity: 0, y: -50, duration: 1, ease: 'power2.out' });
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,12 +29,12 @@ function Login() {
     let valid = true;
     let newErrors = {};
 
-    if (!formData.username) {
+    if (!formData.username.trim()) {
       newErrors.username = 'Username is required.';
       valid = false;
     }
 
-    if (!formData.password) {
+    if (!formData.password.trim()) {
       newErrors.password = 'Password is required.';
       valid = false;
     }
@@ -50,13 +53,8 @@ function Login() {
     try {
       const resultAction = await dispatch(loginUser(formData));
       if (loginUser.fulfilled.match(resultAction)) {
-        setShowDialog(true);
-        setTimeout(() => {
-          setShowDialog(false);
-          navigate('/');
-        }, 2000); // Show dialog for 2 seconds
+        navigate('/');
       } else {
-        // Handle login errors based on the response
         setErrors({ ...errors, general: resultAction.payload.message || 'Login failed. Please try again.' });
       }
     } catch (err) {
@@ -66,42 +64,44 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-          {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
-        </div>
-
-        <div>
-          <input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
-        </div>
-
-        {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}
-
-        <button type="submit">Login</button>
-      </form>
-
-      {loading && <p>Loading...</p>}
-
-      {showDialog && (
-        <div style={{ border: '1px solid black', padding: '10px', marginTop: '10px' }}>
-          <p>Logged in as {formData.username}</p>
-        </div>
-      )}
+    <div className="login-container">
+      <div className="login-box" ref={formRef}>
+        <h2 className="login-title">Login</h2>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="input-field">
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+              onFocus={() => gsap.to(formRef.current, { scale: 1.05, duration: 0.3 })}
+              onBlur={() => gsap.to(formRef.current, { scale: 1, duration: 0.3 })}
+              required
+            />
+            {errors.username && <p className="error">{errors.username}</p>}
+          </div>
+          <div className="input-field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              onFocus={() => gsap.to(formRef.current, { scale: 1.05, duration: 0.3 })}
+              onBlur={() => gsap.to(formRef.current, { scale: 1, duration: 0.3 })}
+              required
+            />
+            {errors.password && <p className="error">{errors.password}</p>}
+          </div>
+          <button type="submit" className="login-button">
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+          {errors.general && <p className="error">{errors.general}</p>}
+        </form>
+      </div>
     </div>
   );
 }

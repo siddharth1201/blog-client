@@ -1,4 +1,3 @@
-// viewPost.jsx
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -65,42 +64,39 @@ function ViewPost() {
       <button className="back-button" onClick={() => navigate('/')}>
         Back to Home
       </button>
-      <h2>{article.title}</h2>
-      <h3>{article.subtitle}</h3>
-      <div dangerouslySetInnerHTML={{ __html: article.body }} />
-      {article.imageLink && (
-        <div className="article-image">
+
+      <div className="header-section">
+        {article.imageLink && (
           <img src={article.imageLink} alt={article.title} />
+        )}
+        <h2>{article.title}</h2>
+        <h3>{article.subtitle}</h3>
+      </div>
+
+      <div className="content-area">
+        <div className="post-body">
+          <div dangerouslySetInnerHTML={{ __html: article.body }} />
         </div>
-      )}
 
-      {isAuthor && (
-        <>
-          <button className="edit-button" onClick={handleEditArticle}>
-            Edit
+        <div className="comments-section">
+          <h4>Comments</h4>
+          {comments.map((comment) => (
+            <div className="comment" key={comment.id}>
+              <p>
+                <strong>{comment.author.username}:</strong> {comment.body}
+              </p>
+            </div>
+          ))}
+          <textarea
+            className="comment-input"
+            placeholder="Add a comment..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <button className="comment-button" onClick={handleAddComment}>
+            Submit Comment
           </button>
-          <button className="delete-button" onClick={handleDeleteArticle}>
-            Delete
-          </button>
-        </>
-      )}
-
-      <div className="comments-section">
-        <h4>Comments</h4>
-        {comments.map((comment) => (
-          <p key={comment.id}>
-            <strong>{comment.author.username}:</strong> {comment.body}
-          </p>
-        ))}
-        <textarea
-          className="comment-input"
-          placeholder="Add a comment..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <button className="comment-button" onClick={handleAddComment}>
-          Submit Comment
-        </button>
+        </div>
       </div>
 
       {/* Comment Added Popup */}
@@ -128,6 +124,17 @@ function ViewPost() {
               No
             </button>
           </div>
+        </div>
+      )}
+
+      {isAuthor && (
+        <div className="article-actions">
+          <button className="edit-button" onClick={handleEditArticle}>
+            Edit
+          </button>
+          <button className="delete-button" onClick={handleDeleteArticle}>
+            Delete
+          </button>
         </div>
       )}
     </div>

@@ -5,6 +5,7 @@ import CKEditorComponent from './CKEditorComponent';
 import { useNavigate, useLocation } from 'react-router-dom';
 import UpdateConfirmationModal from './modals/UpdateConfirmationModal';
 import './css/createPost.css';
+import { gsap } from 'gsap';
 
 function CreatePost() {
   const dispatch = useDispatch();
@@ -19,11 +20,12 @@ function CreatePost() {
   const [body, setBody] = useState(editingArticle?.body || '');
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
-  const [previewUrl, setPreviewUrl] = useState(''); // For image preview
-  const [imageError, setImageError] = useState(''); // For image link validation
-  const [formErrors, setFormErrors] = useState({ title: '', body: '' }); // For form validation errors
-  const [showCancelConfirmationModal, setShowCancelConfirmationModal] = useState(false); // For cancel confirmation modal
-  const [showUpdateConfirmationModal, setShowUpdateConfirmationModal] = useState(false); // For update confirmation modal
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [imageError, setImageError] = useState('');
+  const [formErrors, setFormErrors] = useState({ title: '', body: '' });
+  const [showCancelConfirmationModal, setShowCancelConfirmationModal] = useState(false);
+  const [showUpdateConfirmationModal, setShowUpdateConfirmationModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (editingArticle) {
@@ -37,8 +39,11 @@ function CreatePost() {
     }
   }, [editingArticle]);
 
+  useEffect(() => {
+    gsap.fromTo('.create-post-box', { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: 'power3.out' });
+  }, []);
+
   const updateImagePreview = (url) => {
-    // Check if the URL is valid and an image
     const img = new Image();
     img.src = url;
     img.onload = () => {
@@ -78,6 +83,8 @@ function CreatePost() {
   const handleCreateOrUpdateArticle = () => {
     if (!validateForm()) return;
 
+    setLoading(true);
+
     if (editingArticle) {
       setShowUpdateConfirmationModal(true);
     } else {
@@ -88,7 +95,8 @@ function CreatePost() {
           resetForm();
           setTimeout(() => setShowSuccessNotification(false), 3000);
           navigate('/');
-        });
+        })
+        .finally(() => setLoading(false));
     }
   };
 
@@ -97,10 +105,10 @@ function CreatePost() {
       .then(() => {
         setNotificationMessage('Article updated successfully!');
         setShowSuccessNotification(true);
-        resetForm();
         setTimeout(() => setShowSuccessNotification(false), 3000);
         navigate('/');
-      });
+      })
+      .finally(() => setLoading(false));
     setShowUpdateConfirmationModal(false);
   };
 
@@ -114,7 +122,7 @@ function CreatePost() {
 
   const confirmNavigation = () => {
     setShowCancelConfirmationModal(false);
-    navigate('/'); // Redirect to the view page
+    navigate('/');
   };
 
   const cancelNavigation = () => {
@@ -128,72 +136,100 @@ function CreatePost() {
     setBody('');
     setPreviewUrl('');
     setImageError('');
-    setFormErrors({ title: '', body: '' }); // Reset form errors
+    setFormErrors({ title: '', body: '' });
   };
 
   return (
     <div className="create-post-container">
-      <h2>{editingArticle ? 'Edit Article' : 'Create a New Article'}</h2>
-      <input
-        className="input-field"
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      {formErrors.title && <p className="form-error">{formErrors.title}</p>}
-      <input
-        className="input-field"
-        type="text"
-        placeholder="Subtitle"
-        value={subtitle}
-        onChange={(e) => setSubtitle(e.target.value)}
-      />
-      <input
-        className="input-field"
-        type="text"
-        placeholder="Image Link"
-        value={imageLink}
-        onChange={handleImageLinkChange}
-      />
-      {previewUrl && (
-        <div className="image-preview">
-          <img src={previewUrl} alt="Preview" />
+      <div className="create-post-box">
+        <h2 className="create-post-title">
+          {editingArticle ? 'Edit Article' : 'Create a New Article'}
+        </h2>
+        <div className="create-post-form">
+          <div className="input-field">
+            <label htmlFor="title">Title</label>
+            <input
+              id="title"
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            {formErrors.title && <p className="form-error">{formErrors.title}</p>}
+          </div>
+          <div className="input-field">
+            <label htmlFor="subtitle">Subtitle</label>
+            <input
+              id="subtitle"
+              type="text"
+              placeholder="Subtitle"
+              value={subtitle}
+              onChange={(e) => setSubtitle(e.target.value)}
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="imageLink">Image Link</label>
+            <input
+              id="imageLink"
+              type="text"
+              placeholder="Image Link"
+              value={imageLink}
+              onChange={handleImageLinkChange}
+            />
+            {previewUrl && (
+              <div className="image-preview">
+                <img src={previewUrl} alt="Preview" />
+              </div>
+            )}
+            {imageError && <p className="image-error">{imageError}</p>}
+          </div>
+          <CKEditorComponent data={body} setData={setBody} />
+          {formErrors.body && <p className="form-error">{formErrors.body}</p>}
+          <div className="button-group">
+            <button className="submit-button" onClick={handleCreateOrUpdateArticle}>
+              {editingArticle ? 'Update' : 'Submit'}
+            </button>
+            <button className="cancel-button" onClick={handleCancel}>
+              Cancel
+            </button>
+          </div>
+
+          {loading && (
+            <div className="loading-spinner">
+              <div className="spinner-ring"></div>
+              <div className="spinner-ring"></div>
+              <div className="spinner-ring"></div>
+              <div className="spinner-ring"></div>
+            </div>
+          )}
+
+          {showSuccessNotification && (
+            <div className="notification">
+              <p>{notificationMessage}</p>
+            </div>
+          )}
+
+          {showCancelConfirmationModal && (
+            <UpdateConfirmationModal
+              actionType="save"
+              onConfirm={confirmNavigation}
+              onCancel={() => navigate('/')}
+            />
+          )}
+
+          {showUpdateConfirmationModal && (
+            <UpdateConfirmationModal
+              actionType="update"
+              onConfirm={handleUpdateConfirmation}
+              onCancel={() => setShowUpdateConfirmationModal(false)}
+            />
+          )}
         </div>
-      )}
-      {imageError && <p className="image-error">{imageError}</p>}
-      <CKEditorComponent data={body} setData={setBody} />
-      {formErrors.body && <p className="form-error">{formErrors.body}</p>}
-      <button className="submit-button" onClick={handleCreateOrUpdateArticle}>
-        {editingArticle ? 'Update' : 'Submit'}
-      </button>
-      <button className="cancel-button" onClick={handleCancel}>
-        Cancel
-      </button>
-
-      {showSuccessNotification && (
-        <div className="notification">
-          <p>{notificationMessage}</p>
-        </div>
-      )}
-
-      {showCancelConfirmationModal && (
-        <UpdateConfirmationModal
-          actionType="save"
-          onConfirm={confirmNavigation}
-          onCancel={() => navigate('/')} // Redirect to the view page on discard
-        />
-      )}
-
-      {showUpdateConfirmationModal && (
-        <UpdateConfirmationModal
-          actionType="update"
-          onConfirm={handleUpdateConfirmation}
-          onCancel={() => setShowUpdateConfirmationModal(false)}
-        />
-      )}
+      </div>
     </div>
   );
 }
 
 export default CreatePost;
+
+       
