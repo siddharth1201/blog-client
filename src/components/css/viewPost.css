@@ -211,6 +211,12 @@
   .view-post-container {
     padding: 30px;
   }
+  .header-section img {
+    width: auto;
+    max-height: 80vh;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
   .header-section h2 {
     font-size: 3rem;
   }
@@ -224,6 +230,12 @@
   .content-area {
     flex-direction: row;
   }
+  .header-section img {
+    width: auto;
+    max-height: 80vh;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
   .post-body {
     font-size: 1.1rem;
   }
@@ -233,6 +245,12 @@
 @media (max-width: 991px) and (min-width: 768px) {
   .view-post-container {
     padding: 20px 15px;
+  }
+  .header-section img {
+    width: auto;
+    max-height: 80vh;
+    border-radius: 10px;
+    margin-bottom: 10px;
   }
   .header-section h2 {
     font-size: 2rem;
@@ -249,6 +267,12 @@
 @media (max-width: 767px) and (min-width: 576px) {
   .content-area {
     gap: 15px;
+  }
+  .header-section img {
+    width: auto;
+    max-height: 80vh;
+    border-radius: 10px;
+    margin-bottom: 10px;
   }
   .header-section h2 {
     font-size: 1.8rem;
