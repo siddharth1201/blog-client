@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/articles'; // Base URL for articles
+const API_URL = 'http://blog-serve-production.up.railway.app/articles'; // Base URL for articles
 
 // Fetch comments for a specific article by its slug
 export const fetchComments = createAsyncThunk(

@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/users';
+const API_URL = 'http://blog-serve-production.up.railway.app/users';
 
 export const signupUser = createAsyncThunk('auth/signupUser', async (userData, { rejectWithValue }) => {
   try {
