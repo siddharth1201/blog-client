@@ -270,7 +270,10 @@
     padding: 15px 10px;
   }
   .header-section img {
-    max-height: 50vh;
+    width: auto;
+    max-height: 80vh;
+    border-radius: 10px;
+    margin-bottom: 10px;
   }
   .header-section h2 {
     font-size: 1.5rem;
