@@ -212,7 +212,7 @@ function CreatePost() {
           {showCancelConfirmationModal && (
             <UpdateConfirmationModal
               actionType="save"
-              onConfirm={confirmNavigation}
+              onConfirm={handleUpdateConfirmation}
               onCancel={() => navigate('/')}
             />
           )}

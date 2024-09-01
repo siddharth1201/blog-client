@@ -15,7 +15,35 @@ const CKEditorComponent = ({ data, setData }) => {
                 data={data}
                 onChange={handleEditorChange}
                 config={{
-                    toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'undo', 'redo'],
+                    toolbar: {
+                        items: [
+                            'undo', 'redo',          // Undo/Redo actions
+                            '|',
+                            'heading',               // Headings
+                            '|',
+                            'bold', 'italic', 'strikethrough', // Basic text styling
+                            'link',                  // Insert links
+                            'blockQuote',            // Block quote
+                            '|',
+                            'bulletedList', 'numberedList', // List options
+                            '|',
+                            'insertTable',           // Insert tables
+                            'mediaEmbed',            // Embed media
+                            '|',
+                            'outdent', 'indent',     // Indentation options
+                            '|',
+                            'removeFormat',          // Remove formatting
+                            '|',
+                            'uploadImage',           // Image upload (basic image upload)
+                        ],
+                        shouldNotGroupWhenFull: true // Optional grouping behavior
+                    },
+                    image: {
+                        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
+                    },
+                    table: {
+                        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                    },
                 }}
             />
         </div>

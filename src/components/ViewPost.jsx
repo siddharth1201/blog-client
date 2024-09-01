@@ -62,7 +62,7 @@ function ViewPost() {
   return (
     <div className="view-post-container">
       <button className="back-button" onClick={() => navigate('/')}>
-        Back to Home
+        Home
       </button>
 
       <div className="header-section">

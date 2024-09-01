@@ -1,43 +1,127 @@
-/* updateConfirmationModal.css */
+/* Modal container styling */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 10px; /* Padding for better spacing on smaller screens */
+}
+
+/* Modal content styling */
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding a subtle shadow for a modern look */
+}
+
+/* Modal buttons styling */
+.modal-confirm-button,
+.modal-cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+/* Confirm button styling */
+.modal-confirm-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.modal-confirm-button:hover {
+  background-color: #218838;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Cancel button styling */
+.modal-cancel-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.modal-cancel-button:hover {
+  background-color: #c82333;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Responsive adjustments */
+
+/* Extra large screens (1200px and above) */
+@media (min-width: 1200px) {
   .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
+      max-width: 500px;
+      padding: 25px; /* More padding for larger screens */
   }
-  
   .modal-confirm-button,
   .modal-cancel-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 5px;
+      font-size: 18px;
+      padding: 12px 25px;
   }
-  
-  .modal-confirm-button {
-    background-color: #28a745;
-    color: #fff;
+}
+
+/* Large screens (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .modal-content {
+      max-width: 450px;
+      padding: 22px;
   }
-  
+  .modal-confirm-button,
   .modal-cancel-button {
-    background-color: #dc3545;
-    color: #fff;
+      font-size: 17px;
+      padding: 11px 22px;
   }
-  
+}
+
+/* Medium screens (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .modal-content {
+      max-width: 400px;
+      padding: 20px;
+  }
+  .modal-confirm-button,
+  .modal-cancel-button {
+      font-size: 16px;
+      padding: 10px 20px;
+  }
+}
+
+/* Small screens (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .modal-content {
+      width: 95%;
+      padding: 18px;
+  }
+  .modal-confirm-button,
+  .modal-cancel-button {
+      font-size: 15px;
+      padding: 9px 18px;
+  }
+}
+
+/* Extra small screens (up to 575px) */
+@media (max-width: 575px) {
+  .modal-content {
+      width: 100%; /* Full width for smaller screens */
+      max-width: none;
+      padding: 15px; /* Reduce padding for compact view */
+  }
+  .modal-confirm-button,
+  .modal-cancel-button {
+      font-size: 14px;
+      padding: 8px 16px;
+  }
+}

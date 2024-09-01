@@ -17,9 +17,6 @@ button {
   margin: 5px;
 }
 
-
-
-
 .popup {
   position: fixed;
   top: 20px;
@@ -35,7 +32,7 @@ button {
 /* Updated grid layout for articles */
 .articles-grid {
   display: grid;
-  position:relative;
+  position: relative;
   grid-template-columns: repeat(2, 1fr); /* Two equal-sized columns */
   gap: 20px;
 }
@@ -114,4 +111,75 @@ button {
 
 .article-component:hover .article-overlay {
   opacity: 1; /* Show overlay on hover */
+}
+
+/* Responsive Styles */
+
+/* Large Desktops (1200px and above) */
+@media (min-width: 1200px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr); /* Maintain two columns */
+  }
+  .article-component.regular {
+    height: 500px; /* Adjust height */
+  }
+  .article-component.banner {
+    height: 700px; /* Adjust height */
+  }
+}
+
+/* Desktops (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr); /* Maintain two columns */
+  }
+  .article-component.regular {
+    height: 450px;
+  }
+  .article-component.banner {
+    height: 650px;
+  }
+}
+
+/* Tablets (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .articles-grid {
+    display: flex; /* Single column layout */
+    flex-direction: column;
+  }
+  .article-component.regular,
+  .article-component.banner {
+    grid-column: span 1; /* Span full width */
+    height: 400px; /* Adjust height */
+  }
+}
+
+/* Large Phones (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .articles-grid {
+    display: flex; /* Single column layout */
+    flex-direction: column;
+  }
+  .article-component.regular,
+  .article-component.banner {
+    height: 350px; /* Adjust height */
+  }
+}
+
+/* Small Phones (up to 575px) */
+@media (max-width: 575px) {
+  .articles-grid {
+    display: flex; /* Single column layout */
+    flex-direction: column;
+  }
+  .article-component.regular,
+  .article-component.banner {
+    height: 300px; /* Adjust height */
+  }
+  .article-text-overlay h3 {
+    font-size: 1.2em; /* Adjust font size for smaller screens */
+  }
+  .article-text-overlay p {
+    font-size: 0.9em; /* Adjust font size for smaller screens */
+  }
 }

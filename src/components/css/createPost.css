@@ -14,7 +14,14 @@
 .create-post-container h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #fff;
+  color: #332e2e;
+  text-align: center;
+}
+
+.create-post-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #513030;
   text-align: center;
 }
 
@@ -44,7 +51,7 @@
   padding: 10px 20px;
   margin-right: 10px;
   border: none;
-  background: rgba(40, 167, 69, 0.8); /* Transparent green */
+  background: rgba(30, 201, 192, 0.563); /* Transparent green */
   color: #fff;
   font-size: 16px;
   border-radius: 8px;
@@ -53,14 +60,14 @@
 }
 
 .submit-button:hover {
-  background: rgba(40, 167, 69, 1); /* Solid green on hover */
+  background: rgba(40, 161, 167, 0.452); /* Solid green on hover */
 }
 
 /* Cancel button styling */
 .cancel-button {
   padding: 10px 20px;
   border: none;
-  background: rgba(220, 53, 69, 0.8); /* Transparent red */
+  background: rgba(220, 53, 70, 0.567); /* Transparent red */
   color: #fff;
   font-size: 16px;
   border-radius: 8px;
@@ -94,6 +101,7 @@
   height: auto;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
+  max-height: 60vh;
 }
 
 /* Error message styling for invalid image link */
@@ -150,8 +158,81 @@
 
 /* Error message styling */
 .form-error {
-  color: rgba(220, 53, 69, 0.8); /* Transparent red */
+  color: rgb(215, 222, 71); /* Transparent red */
   font-size: 14px;
-  margin-top: -10px;
+  margin-top: -2px;
   margin-bottom: 15px;
+}
+
+/* Responsive Styles */
+
+/* Large Desktops (1200px and above) */
+@media (min-width: 1200px) {
+  .create-post-container {
+    padding: 30px; /* More padding for larger screens */
+  }
+  .submit-button, .cancel-button {
+    font-size: 18px; /* Increase button text size */
+  }
+}
+
+/* Desktops (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .create-post-container {
+    padding: 25px;
+  }
+  .input-field {
+    font-size: 15px;
+  }
+}
+
+/* Tablets (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .create-post-container {
+    padding: 20px;
+  }
+  .input-field {
+    width: calc(100% - 15px); /* Slightly smaller input width */
+  }
+  .submit-button, .cancel-button {
+    font-size: 15px;
+  }
+}
+
+/* Large Phones (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .create-post-container {
+    padding: 15px;
+  }
+  .input-field {
+    width: calc(100% - 10px);
+  }
+  h2, h1 {
+    font-size: 20px; /* Slightly smaller headings */
+  }
+  .submit-button, .cancel-button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Small Phones (up to 575px) */
+@media (max-width: 575px) {
+  .create-post-container {
+    padding: 10px;
+  }
+  h2, h1 {
+    font-size: 18px; /* Smaller font size */
+  }
+  .input-field {
+    font-size: 14px; /* Smaller input text size */
+  }
+  .submit-button, .cancel-button {
+    padding: 8px 12px; /* Smaller padding for buttons */
+    font-size: 13px;
+  }
+  .modal-content {
+    width: 95%; /* Slightly narrower modal */
+    padding: 15px;
+  }
 }

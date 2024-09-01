@@ -1,75 +1,142 @@
-/* articleComponent.css */
-
 .article-component {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    margin: 10px 0;
-    position: relative;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  margin: 10px 0;
+  position: relative;
+}
+
+.article-image {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+.article-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.article-text-overlay {
+  position: static;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #c4a0a0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.article-component:hover .article-image img {
+  filter: blur(3px);
+}
+
+.article-component:hover .article-overlay,
+.article-component:hover .article-text-overlay {
+  opacity: 1;
+}
+
+h3 {
+  font-size: 1.6em;
+  margin: 0;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+/* Responsive Styles */
+
+/* Large Desktops (1200px and above) */
+@media (min-width: 1200px) {
   .article-image {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
+    height: 450px; /* Adjust height */
   }
-  
-  .article-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: filter 0.3s ease;
-  }
-  
-  .article-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    transition: opacity 0.3s ease;
-    opacity: 0;
-  }
-  
-  .article-text-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .article-component:hover .article-image img {
-    filter: blur(3px);
-  }
-  
-  .article-component:hover .article-overlay,
-  .article-component:hover .article-text-overlay {
-    opacity: 1;
-  }
-  
   h3 {
-    font-size: 1.6em;
-    margin: 0;
+    font-size: 1.8em; /* Slightly larger text */
   }
-  
   p {
-    font-size: 1.2em;
+    font-size: 1.3em; /* Slightly larger text */
   }
-  
+}
+
+/* Desktops (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .article-image {
+    height: 400px; /* Default height */
+  }
+  h3 {
+    font-size: 1.7em; /* Adjust font size */
+  }
+  p {
+    font-size: 1.2em; /* Default font size */
+  }
+}
+
+/* Tablets (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .article-image {
+    height: 350px; /* Reduce height */
+  }
+  h3 {
+    font-size: 1.5em; /* Adjust for readability */
+  }
+  p {
+    font-size: 1.1em; /* Adjust for readability */
+  }
+}
+
+/* Large Phones (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .article-image {
+    height: 300px; /* Further reduce height */
+  }
+  h3 {
+    font-size: 1.4em; /* Smaller text for phones */
+  }
+  p {
+    font-size: 1em; /* Smaller text for phones */
+  }
+}
+
+/* Small Phones (up to 575px) */
+@media (max-width: 575px) {
+  .article-image {
+    height: 250px; /* Smallest height */
+  }
+  .article-text-overlay {
+    padding: 15px; /* Reduce padding for smaller screens */
+  }
+  h3 {
+    font-size: 1.3em; /* Smaller font size */
+  }
+  p {
+    font-size: 0.9em; /* Smaller font size */
+  }
+}

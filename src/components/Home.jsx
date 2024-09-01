@@ -74,10 +74,7 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1>Welcome to the Home Page!</h1>
-      
-
-      <h2>Articles</h2>
+    
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       <div className="articles-grid" ref={gridRef}>

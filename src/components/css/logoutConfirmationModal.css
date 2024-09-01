@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 10px; /* Added padding for smaller screens */
 }
 
 /* Modal content styling */
@@ -55,4 +56,71 @@
 .modal-cancel-button:hover {
     background-color: #e53935; /* Darker red on hover */
     transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Responsive adjustments */
+
+/* Extra large screens (1200px and above) */
+@media (min-width: 1200px) {
+    .modal-content {
+        max-width: 500px; /* Larger modal width for big screens */
+        padding: 30px; /* Increased padding */
+    }
+    .modal-confirm-button,
+    .modal-cancel-button {
+        font-size: 18px;
+        padding: 14px 28px; /* Bigger buttons for better usability */
+    }
+}
+
+/* Large screens (992px to 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .modal-content {
+        max-width: 450px;
+    }
+    .modal-confirm-button,
+    .modal-cancel-button {
+        font-size: 17px;
+        padding: 13px 26px;
+    }
+}
+
+/* Medium screens (768px to 991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+    .modal-content {
+        max-width: 400px;
+        padding: 20px;
+    }
+    .modal-confirm-button,
+    .modal-cancel-button {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+}
+
+/* Small screens (576px to 767px) */
+@media (max-width: 767px) and (min-width: 576px) {
+    .modal-content {
+        width: 95%; /* Wider modal for better readability */
+        padding: 18px;
+    }
+    .modal-confirm-button,
+    .modal-cancel-button {
+        font-size: 15px;
+        padding: 11px 22px;
+    }
+}
+
+/* Extra small screens (up to 575px) */
+@media (max-width: 575px) {
+    .modal-content {
+        width: 100%; /* Use full width */
+        max-width: none; /* Remove max-width for smaller screens */
+        padding: 15px;
+    }
+    .modal-confirm-button,
+    .modal-cancel-button {
+        font-size: 14px; /* Slightly smaller font for smaller screens */
+        padding: 10px 20px;
+    }
 }
