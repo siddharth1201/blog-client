@@ -6,7 +6,7 @@ import Home from './components/Home';
 import CreatePost from './components/CreatePost';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import ViewPost from './components/ViewPost';
-import NavBar from './components/NavBar';
+import NavBar from './components/NavbarComponent';
 import PublicRoute from './components/PublicRoutes'; // Import PublicRoute
 
 function App() {
