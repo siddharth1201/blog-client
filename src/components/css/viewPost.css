@@ -29,7 +29,9 @@
 
 /* Header section for image, title, and subtitle */
 .header-section {
-  display: contents;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
   text-align: center;
 }
