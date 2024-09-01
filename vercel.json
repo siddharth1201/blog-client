@@ -14,7 +14,7 @@
       }
     ],
     "framework": "vite",
-    "buildCommand": "vite build",
+    "buildCommand": "npm run dev",
     "outputDirectory": "dist"
   }
   
