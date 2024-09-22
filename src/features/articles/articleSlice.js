@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'https://blog-serve-production.up.railway.app/articles'; // Replace with your API URL
+const API_URL = 'https://blog-server-latest.onrender.com/articles'; // Replace with your API URL
 
 // Thunks for asynchronous actions
 export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (_, { rejectWithValue }) => {
